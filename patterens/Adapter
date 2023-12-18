@@ -1,0 +1,38 @@
+#Незручний інтерфейс
+class LegacyGame:
+    def old_method(self):
+        return "Legacy game method"
+
+#Зручний інтерфейс
+class NewGameInterface:
+    def new_method(self):
+        pass
+
+# Адаптер
+class Adapter(NewGameInterface):
+    def __init__(self, legacy_game):
+        self.legacy_game = legacy_game
+
+    def new_method(self):
+        return self.legacy_game.old_method()
+
+class NewGame:
+    def __init__(self, adapter):
+        self.adapter = adapter
+
+    def play(self):
+        print(f"Playing the new game: {self.adapter.new_method()}")
+
+def main():
+    #Незручний
+    legacy_game = LegacyGame()
+
+    #Адаптер
+    adapter = Adapter(legacy_game)
+
+    #Використання нового інтерфейсу через адаптер
+    new_game = NewGame(adapter)
+    new_game.play()
+
+if __name__ == "__main__":
+    main()
