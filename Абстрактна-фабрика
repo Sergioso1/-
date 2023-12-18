@@ -1,0 +1,86 @@
+# Загальний інтерфейс для персонажів
+class Character:
+    def display(self):
+        pass
+
+    def attack(self):
+        pass
+
+# Загальний інтерфейс для зброї
+class Weapon:
+    def display(self):
+        pass
+
+    def use(self):
+        pass
+
+# Абстрактний клас абстрактної фабрики
+class GameFactory:
+    def create_character(self) -> Character:
+        pass
+
+    def create_weapon(self) -> Weapon:
+        pass
+
+#в стилі фентезі
+class FantasyGameFactory(GameFactory):
+    def create_character(self) -> Character:
+        return FantasyCharacter()
+
+    def create_weapon(self) -> Weapon:
+        return FantasyWeapon()
+
+#в стилі наукової фантастики
+class SciFiGameFactory(GameFactory):
+    def create_character(self) -> Character:
+        return SciFiCharacter()
+
+    def create_weapon(self) -> Weapon:
+        return SciFiWeapon()
+
+#фентезі та наукової фантастики
+class FantasyCharacter(Character):
+    def display(self):
+        print("Fantasy Character")
+
+    def attack(self):
+        print("Performing fantasy attack")
+
+class FantasyWeapon(Weapon):
+    def display(self):
+        print("Fantasy Weapon")
+
+    def use(self):
+        print("Using fantasy weapon")
+
+class SciFiCharacter(Character):
+    def display(self):
+        print("Sci-Fi Character")
+
+    def attack(self):
+        print("Performing sci-fi attack")
+
+class SciFiWeapon(Weapon):
+    def display(self):
+        print("Sci-Fi Weapon")
+
+    def use(self):
+        print("Using sci-fi weapon")
+
+def main():
+    # Ініціалізація програми і вибір конкретної фабрики (фентезі або наукової фантастики)
+    factory = FantasyGameFactory()  # або SciFiGameFactory()
+
+    # Виклик фабричних методів для створення персонажа та зброї
+    character = factory.create_character()
+    weapon = factory.create_weapon()
+
+    # Використання створених продуктів
+    character.display()
+    character.attack()
+
+    weapon.display()
+    weapon.use()
+
+if __name__ == "__main__":
+    main()
