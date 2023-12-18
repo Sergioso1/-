@@ -1,0 +1,29 @@
+class GameSingleton:
+    _instance = None
+
+    def __init__(self, name):
+        self.name = name
+
+    @classmethod
+    def get_instance(cls, name):
+        if not cls._instance:
+            cls._instance = cls(name)
+        return cls._instance
+
+    def play(self):
+        print(f"Playing the game: {self.name}")
+
+
+def main():
+    # Спроба створити Одинака без його створюючого методу не працює
+
+    game1 = GameSingleton.get_instance("Game A")
+    game2 = GameSingleton.get_instance("Game B")
+
+    print(game1 is game2) 
+
+    game1.play()  # Playing the game: Game A
+    game2.play()  # Playing the game: Game A 
+
+if __name__ == "__main__":
+    main()
