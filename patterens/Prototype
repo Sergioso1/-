@@ -1,0 +1,61 @@
+from copy import deepcopy
+from typing import Union
+
+class GamePrototype:
+    def clone(self):
+        pass
+class Character(GamePrototype):
+    def __init__(self, name):
+        self.name = name
+
+    def clone(self):
+        return Character(self.name)
+
+class Enemy(GamePrototype):
+    def __init__(self, type):
+        self.type = type
+
+    def clone(self):
+        return Enemy(self.type)
+
+class Environment(GamePrototype):
+    def __init__(self, terrain):
+        self.terrain = terrain
+
+    def clone(self):
+        return Environment(self.terrain)
+class PrototypeStore:
+    _prototypes = {}
+
+    @classmethod
+    def add_prototype(cls, name, prototype):
+        cls._prototypes[name] = prototype
+
+    @classmethod
+    def get_prototype(cls, name):
+        return cls._prototypes.get(name)
+
+    @classmethod
+    def clone_prototype(cls, name):
+        prototype = cls.get_prototype(name)
+        if prototype:
+            return prototype.clone()
+        return None
+def main():
+    # Додаємо прототипи до сховища
+    PrototypeStore.add_prototype("player", Character("Player"))
+    PrototypeStore.add_prototype("enemy", Enemy("Zombie"))
+    PrototypeStore.add_prototype("forest", Environment("Forest"))
+
+    # Клонуємо об'єкти за допомогою сховища прототипів
+    player_clone = PrototypeStore.clone_prototype("player")
+    enemy_clone = PrototypeStore.clone_prototype("enemy")
+    forest_clone = PrototypeStore.clone_prototype("forest")
+
+    # Виводимо інформацію про клоновані об'єкти
+    print("Player Clone:", player_clone.name)
+    print("Enemy Clone:", enemy_clone.type)
+    print("Forest Clone:", forest_clone.terrain)
+
+if __name__ == "__main__":
+    main()
