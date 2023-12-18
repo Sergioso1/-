@@ -1,0 +1,82 @@
+from abc import ABC, abstractmethod
+
+#Загальний інтерфейс 
+class GameLevel(ABC):
+    @abstractmethod
+    def set_characters(self):
+        pass
+
+    @abstractmethod
+    def set_enemies(self):
+        pass
+
+    @abstractmethod
+    def set_environment(self):
+        pass
+
+#Рівень гри легкий
+class EasyGameLevel(GameLevel):
+    def __init__(self):
+        self.characters = []
+        self.enemies = []
+        self.environment = []
+
+    def set_characters(self):
+        self.characters = ["Easy Character 1", "Easy Character 2"]
+
+    def set_enemies(self):
+        self.enemies = ["Easy Enemy 1"]
+
+    def set_environment(self):
+        self.environment = ["Easy Environment"]
+
+#Рівень гри середній
+class MediumGameLevel(GameLevel):
+    def __init__(self):
+        self.characters = []
+        self.enemies = []
+        self.environment = []
+
+    def set_characters(self):
+        self.characters = ["Medium Character 1", "Medium Character 2"]
+
+    def set_enemies(self):
+        self.enemies = ["Medium Enemy 1", "Medium Enemy 2"]
+
+    def set_environment(self):
+        self.environment = ["Medium Environment"]
+
+#Порядок будівництва продукту
+class GameDirector:
+    def __init__(self, builder):
+        self.builder = builder
+
+    def construct(self):
+        self.builder.set_characters()
+        self.builder.set_enemies()
+        self.builder.set_environment()
+
+    def get_result(self):
+        return self.builder
+
+def main():
+    #Створення будівельників
+    easy_builder = EasyGameLevel()
+    medium_builder = MediumGameLevel()
+
+    director = GameDirector(easy_builder)
+
+    #Будівництво рівня гри
+    director.construct()
+
+    #Отримання результату
+    easy_game_level = director.get_result()
+
+    #Виведення інформації про рівень гри
+    print("Easy Game Level:")
+    print("Characters:", easy_game_level.characters)
+    print("Enemies:", easy_game_level.enemies)
+    print("Environment:", easy_game_level.environment)
+
+if __name__ == "__main__":
+    main()
