@@ -1,0 +1,65 @@
+from abc import ABC, abstractmethod
+
+#Абстрактний клас легкового автомобіля
+class Car(ABC):
+    @abstractmethod
+    def drive(self):
+        pass
+
+#Абстрактний клас вантажівки
+class Truck(ABC):
+    @abstractmethod
+    def load_cargo(self):
+        pass
+
+# Абстрактна фабрика
+class CarFactory(ABC):
+    @abstractmethod
+    def create_car(self) -> Car:
+        pass
+
+    @abstractmethod
+    def create_truck(self) -> Truck:
+        pass
+
+
+class Sedan(Car):
+    def drive(self):
+        print("Driving a sedan.")
+
+
+class PickupTruck(Truck):
+    def load_cargo(self):
+        print("Loading cargo in a pickup truck.")
+
+
+class SedanFactory(CarFactory):
+    def create_car(self) -> Car:
+        return Sedan()
+
+    def create_truck(self) -> Truck:
+        return None
+
+class TruckFactory(CarFactory):
+    def create_car(self) -> Car:
+        return None
+
+    def create_truck(self) -> Truck:
+        return PickupTruck()
+
+def order_vehicle(factory: CarFactory):
+    car = factory.create_car()
+    truck = factory.create_truck()
+
+    if car:
+        car.drive()
+
+    if truck:
+        truck.load_cargo()
+
+sedan_factory = SedanFactory()
+order_vehicle(sedan_factory)
+
+truck_factory = TruckFactory()
+order_vehicle(truck_factory)
+
